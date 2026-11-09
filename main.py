@@ -40,7 +40,7 @@ def create_deck(decks):
     print("===CREATE A DECK===")
     print("")
     print("Creating a deck takes about 1 minute.")
-    print("Your decks are stored in this computer only.")
+    print("Your decks are stored on this computer only.")
     print("No account or personal information needed.")
     print("")
     print("Type B to go back without creating a deck.")
@@ -88,7 +88,7 @@ def deck_screen(decks, deck_name):
         elif choice == "A":
             add_card(decks, deck_name)
         elif choice == "S":
-            print("Study coming soon.")
+            study_deck(decks, deck_name)
         else:
             print("Invalid choice. Please try again.")
 
@@ -146,6 +146,48 @@ def add_card(decks, deck_name):
                 return
             else:
                 print("Invalid choice. Please try again.")
+
+
+def study_deck(decks, deck_name):
+    cards = decks[deck_name]
+    if not cards:
+        print("This deck has no cards yet. Add a card first.")
+        return
+
+    for number, card in enumerate(cards, start=1):
+        revealed = False
+        while True:
+            print()
+            print(f"===STUDYING: {deck_name.upper()}===")
+            print(f"Card {number} of {len(cards)}")
+            print()
+            print(f"Question: {card['question']}")
+            if revealed:
+                print(f"Answer: {card['answer']}")
+                print()
+                print("[N] Next card")
+                print("[B] Back to deck")
+            else:
+                print()
+                print("Try to recall the answer before revealing it.")
+                print()
+                print("[A] Show answer")
+                print("[N] Next card (skip)")
+                print("[B] Back to deck")
+
+            choice = input("Enter your choice: ").strip().upper()
+            if choice == "A" and not revealed:
+                revealed = True
+            elif choice == "N":
+                break
+            elif choice == "B":
+                return
+            else:
+                print("Invalid choice. Please try again.")
+
+    print()
+    print("You've reached the end of this deck!")
+
 
 
 def main():
