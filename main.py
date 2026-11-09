@@ -18,6 +18,7 @@ def save_decks(decks):
 
 
 def show_home(decks):
+    print("")
     print("===FLASHCARD APP===")
     print("Create flashcard decks for your courses and quiz yourself to prepare for exams.")
     print("")
@@ -34,9 +35,43 @@ def show_home(decks):
     print("Can't find your deck by number? Type its name.")
 
 
+def create_deck(decks):
+    print()
+    print("===CREATE A DECK===")
+    print("")
+    print("Creating a deck takes about 1 minute.")
+    print("Your decks are stored in this computer only.")
+    print("No account or personal information needed.")
+    print("")
+    print("Type B to go back without creating a deck.")
+
+    while True:
+        name = input("Enter a name for your new deck: ").strip()
+        if name.upper() == "B":
+            return
+        if name == "":
+            print("Deck name cannot be empty. Please try again.")
+        elif name in decks:
+            print(f'A deck named "{name}" already exists. Please choose another name.')
+        else:
+            decks[name] = []
+            save_decks(decks)
+            print(f'Deck "{name}" created!')
+            return
+
+
 def main():
     decks = load_decks()
-    show_home(decks)
+    while True:
+        show_home(decks)
+        choice = input("Enter your choice: ").strip()
+        if choice.upper() == "Q":
+            print("Goodbye! Your decks are saved.")
+            break
+        elif choice.upper() == "C":
+            create_deck(decks)
+        else:
+            print("Invalid choice. Please try again.")
 
 
 if __name__ == "__main__":
