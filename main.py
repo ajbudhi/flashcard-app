@@ -104,21 +104,48 @@ def ask_text(prompt):
 
 
 def add_card(decks, deck_name):
-    print()
-    print(f'===ADD CARD: {deck_name.upper()}===')
-    print()
-    print("You can type B at any prompt to go back without saving.")
-    print()
-    print("Step 1 of 3: Enter the question.")
-    print("Step 2 of 3: Enter the answer.")
-    print("Step 3 of 3: Review and Save.")
-    question = ask_text("Question: ")
-    if question is None:
-        return
-    answer = ask_text('Answer: ')
-    if answer is None:
-        return
-    print(f"Got: {question} / {answer}")
+    while True:
+        print()
+        print(f'===ADD CARD: {deck_name.upper()}===')
+        print()
+        print("You can type B at any prompt to go back without saving.")
+        print()
+        print("Step 1 of 3: Enter the question")
+        print("Step 2 of 3: Enter the answer")
+        print("Step 3 of 3: Review and save")
+        question = ask_text("Question: ")
+        if question is None:
+            return
+        answer = ask_text('Answer: ')
+        if answer is None:
+            return
+
+        print()
+        print("===REVIEW YOUR CARD===")
+        print("Step 3 of 3: Review and save")
+        print()
+        print(f"Question: {question}")
+        print(f"Answer: {answer}")
+        print()
+        print("Please check your card for typos before saving.")
+        print("Save this card?")
+        print("[Y] Yes, save it")
+        print("[E] Edit (go back and retype)")
+        print("[B] Back to deck without saving")
+
+        while True:
+            confirm = input("Enter your choice: ").strip().upper()
+            if confirm == "Y":
+                decks[deck_name].append({"question": question, "answer": answer})
+                save_decks(decks)
+                print("Card saved!")
+                return
+            elif confirm == "E":
+                break
+            elif confirm == "B":
+                return
+            else:
+                print("Invalid choice. Please try again.")
 
 
 def main():
@@ -137,6 +164,7 @@ def main():
                 deck_screen(decks, deck_name)
             else:
                 print("Invalid choice. Please try again.")
+
 
 
 if __name__ == "__main__":
