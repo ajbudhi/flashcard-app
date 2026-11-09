@@ -73,6 +73,54 @@ def find_deck(decks, choice):
     return None
 
 
+def deck_screen(decks, deck_name):
+    while True:
+        print()
+        print(f'==={deck_name.upper()}===')
+        print(f'This deck has {len(decks[deck_name])} cards.')
+        print("")
+        print("[A] Add a card")
+        print("[S] Study this deck")
+        print("[B] Back to Home")
+        choice = input("Enter your choice: ").strip().upper()
+        if choice == "B":
+            return
+        elif choice == "A":
+            add_card(decks, deck_name)
+        elif choice == "S":
+            print("Study coming soon.")
+        else:
+            print("Invalid choice. Please try again.")
+
+
+def ask_text(prompt):
+    while True:
+        text = input(prompt).strip()
+        if text.upper() == "B":
+            return None
+        if text:
+            return text
+        print("This cannot be empty. Please try again.")
+
+
+def add_card(decks, deck_name):
+    print()
+    print(f'===ADD CARD: {deck_name.upper()}===')
+    print()
+    print("You can type B at any prompt to go back without saving.")
+    print()
+    print("Step 1 of 3: Enter the question.")
+    print("Step 2 of 3: Enter the answer.")
+    print("Step 3 of 3: Review and Save.")
+    question = ask_text("Question: ")
+    if question is None:
+        return
+    answer = ask_text('Answer: ')
+    if answer is None:
+        return
+    print(f"Got: {question} / {answer}")
+
+
 def main():
     decks = load_decks()
     while True:
@@ -86,7 +134,7 @@ def main():
         else:
             deck_name = find_deck(decks, choice)
             if deck_name:
-                print(f'Opening "{deck_name}"...')
+                deck_screen(decks, deck_name)
             else:
                 print("Invalid choice. Please try again.")
 
