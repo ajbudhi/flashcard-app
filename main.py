@@ -60,6 +60,19 @@ def create_deck(decks):
             return
 
 
+def find_deck(decks, choice):
+    if choice.isdigit():
+        number = int(choice)
+        if 1 <= number <= len(decks):
+            return list(decks)[number - 1]
+
+    for name in decks:
+        if name.lower() == choice.lower():
+            return name
+
+    return None
+
+
 def main():
     decks = load_decks()
     while True:
@@ -71,7 +84,11 @@ def main():
         elif choice.upper() == "C":
             create_deck(decks)
         else:
-            print("Invalid choice. Please try again.")
+            deck_name = find_deck(decks, choice)
+            if deck_name:
+                print(f'Opening "{deck_name}"...')
+            else:
+                print("Invalid choice. Please try again.")
 
 
 if __name__ == "__main__":
